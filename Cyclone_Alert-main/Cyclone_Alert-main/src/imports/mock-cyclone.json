@@ -1,0 +1,24 @@
+{
+  "cyclone_name": "Cyclone Alpha",
+  "category": "Category 4 Very Severe Storm",
+  "wind_speed_kmh": 215,
+  "pressure_hpa": 940,
+  "location": { "lat": 19.8135, "lng": 85.8312 },
+  "projected_path": [
+    { "lat": 19.8135, "lng": 85.8312, "time": "12:00 UTC" },
+    { "lat": 20.1500, "lng": 86.1000, "time": "18:00 UTC" },
+    { "lat": 20.5000, "lng": 86.4000, "time": "00:00 UTC" }
+  ],
+  "infrastructure_risk": [
+    { "id": "inf-1", "name": "Paradeep Port", "type": "Port Facility", "risk_level": "CRITICAL", "distance_km": 18 },
+    { "id": "inf-2", "name": "Substation B-12", "type": "Power Grid", "risk_level": "HIGH", "distance_km": 34 },
+    { "id": "inf-3", "name": "Coastal Highway NH-316", "type": "Transport", "risk_level": "HIGH", "distance_km": 12 },
+    { "id": "inf-4", "name": "District Hospital", "type": "Healthcare", "risk_level": "MODERATE", "distance_km": 45 },
+    { "id": "inf-5", "name": "Inland Telecom Tower", "type": "Telecom", "risk_level": "LOW", "distance_km": 82 }
+  ],
+  "advisories": [
+    { "id": "adv-1", "sector": "Maritime & Ports", "action": "Suspend all port operations and move vessels to outer anchorage.", "risk_level": "CRITICAL" },
+    { "id": "adv-2", "sector": "Power Distribution", "action": "Initiate rolling shutdown on vulnerable 33kV coastal feeders.", "risk_level": "HIGH" },
+    { "id": "adv-3", "sector": "Civil Defense", "action": "Evacuate low-lying coastal zones within 20km radius.", "risk_level": "CRITICAL" }
+  ]
+}

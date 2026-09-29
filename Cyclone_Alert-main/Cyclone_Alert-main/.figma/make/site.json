@@ -1,0 +1,10 @@
+{
+  "description": "Streamline project collaboration with an intuitive platform that organizes tasks, tracks progress, and enhances team productivity efficiently.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

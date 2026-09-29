@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+/* ── Leaflet dark theme overrides ───────────────────────────────── */
+.leaflet-dark .leaflet-container { background: #07111f; }
+.leaflet-dark .leaflet-popup-content-wrapper {
+  background: #0d1b2a; color: #f8fafc;
+  border: 1px solid #1e3a55; border-radius: 8px; padding: 0;
+}
+.leaflet-dark .leaflet-popup-tip { background: #0d1b2a; }
+.leaflet-dark .leaflet-popup-close-button { color: #94a3b8; }
+.leaflet-dark .leaflet-control-zoom a {
+  background: rgba(13,27,42,0.92); color: #94a3b8;
+  border-color: rgba(71,85,105,0.5);
+}
+.leaflet-dark .leaflet-control-zoom a:hover { background: rgba(26,50,80,0.92); color: #f8fafc; }
+.leaflet-dark .leaflet-control-attribution {
+  background: rgba(7,17,31,0.7); color: #475569; font-size: 9px;
+}
+
+/* ── CycloneShield design tokens ────────────────────────────────── */
+:root {
+  --bg-base:      #07111F;
+  --bg-surface:   #0D1B2A;
+  --bg-card:      #12263A;
+  --bg-card-hi:   #1A3250;
+
+  --risk-critical: #EF4444;
+  --risk-high:     #F97316;
+  --risk-moderate: #FACC15;
+  --risk-low:      #22C55E;
+
+  --accent:  #38BDF8;
+  --text:    #F8FAFC;
+  --muted:   #94A3B8;
+  --border:  #1E3A55;
+
+  /* Glow shadows per risk level */
+  --glow-critical: 0 8px 32px rgba(239, 68, 68, 0.55), 0 2px 8px rgba(239, 68, 68, 0.35);
+  --glow-high:     0 8px 32px rgba(249,115, 22, 0.55), 0 2px 8px rgba(249,115, 22, 0.35);
+  --glow-moderate: 0 8px 32px rgba(250,204, 21, 0.50), 0 2px 8px rgba(250,204, 21, 0.30);
+  --glow-low:      0 8px 32px rgba( 34,197, 94, 0.50), 0 2px 8px rgba( 34,197, 94, 0.30);
+  --glow-accent:   0 8px 32px rgba( 56,189,248, 0.45), 0 2px 8px rgba( 56,189,248, 0.25);
+}
+
+/* ── Base reset ─────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ── Typography helpers ─────────────────────────────────────────── */
+.font-display   { font-family: 'Sora', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; }
+.font-mono-data { font-family: 'JetBrains Mono', monospace; }
+
+/* Global font defaults */
+body { font-family: 'Inter', sans-serif; }
+
+/* Stat numbers — always mono */
+.stat-value { font-family: 'JetBrains Mono', monospace; }
+
+/* ── Scrollbars ─────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; height: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ── Risk colour helpers ─────────────────────────────────────────── */
+.risk-critical { color: var(--risk-critical); }
+.risk-high     { color: var(--risk-high); }
+.risk-moderate { color: var(--risk-moderate); }
+.risk-low      { color: var(--risk-low); }
+
+/* ── Cyclone orbital background ──────────────────────────────────── */
+@keyframes cyclone-drift {
+  0%   { transform: scale(1.18) rotate(0deg)   translateX(0px)   translateY(0px); }
+  25%  { transform: scale(1.22) rotate(3.5deg) translateX(-12px) translateY(8px); }
+  50%  { transform: scale(1.20) rotate(6deg)   translateX(-6px)  translateY(16px); }
+  75%  { transform: scale(1.22) rotate(2.5deg) translateX(10px)  translateY(6px); }
+  100% { transform: scale(1.18) rotate(0deg)   translateX(0px)   translateY(0px); }
+}
+
+.cyclone-bg {
+  position: absolute;
+  inset: -10%;
+  background-image: url('/src/assets/cyclone-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  animation: cyclone-drift 60s ease-in-out infinite;
+  will-change: transform;
+  z-index: 0;
+}
+
+.cyclone-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 17, 31, 0.85);
+  z-index: 1;
+}
+
+/* ── Spring card hover ────────────────────────────────────────────
+   cubic-bezier(0.34, 1.56, 0.64, 1) → mild overshoot = spring feel
+   ────────────────────────────────────────────────────────────────── */
+.stat-card {
+  transition:
+    transform      0.42s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow     0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color   0.28s ease,
+    background     0.22s ease;
+  transform: translateY(0) scale(1);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: var(--bg-card-hi) !important;
+}
+
+.stat-card.glow-critical:hover { box-shadow: var(--glow-critical); border-color: var(--risk-critical) !important; }
+.stat-card.glow-high:hover     { box-shadow: var(--glow-high);     border-color: var(--risk-high)     !important; }
+.stat-card.glow-moderate:hover { box-shadow: var(--glow-moderate); border-color: var(--risk-moderate) !important; }
+.stat-card.glow-low:hover      { box-shadow: var(--glow-low);      border-color: var(--risk-low)      !important; }
+.stat-card.glow-accent:hover   { box-shadow: var(--glow-accent);   border-color: var(--accent)        !important; }
+
+/* ── Wind particle stream animation ──────────────────────────────── */
+@keyframes wind-flow {
+  from { stroke-dashoffset: 300; }
+  to   { stroke-dashoffset: 0; }
+}
+.wind-stream {
+  animation: wind-flow linear infinite;
+}
+
+/* ── Metric pulse animation (live data feel) ─────────────────────── */
+@keyframes metric-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.65; }
+}
+
+.metric-live { animation: metric-pulse 2.4s ease-in-out infinite; }
